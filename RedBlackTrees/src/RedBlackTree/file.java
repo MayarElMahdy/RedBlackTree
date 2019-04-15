@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class file {
-	RedBlackTrees RBT = new RedBlackTrees();
+	public RedBlackTrees RBT = new RedBlackTrees();
 	public void Read() 
 	{
 		File f = new File("d.txt");
@@ -19,7 +19,6 @@ public class file {
 				RBT.insert(node);
 				
 			}
-			
 			s.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Cannot be found");

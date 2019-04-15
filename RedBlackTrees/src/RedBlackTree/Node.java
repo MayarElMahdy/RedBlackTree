@@ -9,7 +9,7 @@ public class Node {
 	int color;
 	Node right , parent;
 	Node left = right= parent ;
-	Node (String key)
+	public Node (String key)
 	{
 		this.key = key;
 		left=parent=right= RedBlackTrees.nill;
