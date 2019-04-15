@@ -2,25 +2,36 @@ package RedBlackTree;
 
 public class RedBlackTrees {
 	final static Node nill = new Node("nul");
-	Node root = nill;
+	Node root;
+	RedBlackTrees()
+	{
+	     root = nill;
+	}
 	public void insert(Node inew)
 	{
 		Node node = root;
+		
 		if(root == nill) //if the tree is empty
-		{
-			node = root;
-			node.color = node.BLACK;
-			node.left = nill;
-			node.right=nill;
-			node.parent = nill;
+		{	
+			
+			inew.color = node.BLACK;
+			inew.left = nill;
+			inew.right=nill;
+			inew.parent = nill;
+			root=inew;
 		}
+		
 		else
 		{
 			//We start the red black tree by coloring the node RED 
 			node.color = node.RED;
+			node.left=nill;
+			node.right=nill;
 			while(true) //Breaks when there is a break argument
 			{
+				
 				int compare = inew.key.compareTo(node.key);
+				
 				if(compare<0)
 				{
 				if(node.left==nill) {
@@ -33,7 +44,7 @@ public class RedBlackTrees {
 					node = node.left;
 				}
 				}
-				else if (compare <= 0)
+				else if (compare >= 0)
 				{
 					if (node.right == nill) {
                         node.right = inew;
@@ -46,6 +57,7 @@ public class RedBlackTrees {
 				
 			}
 			colorFix(inew); //After inserting the new node we fix the colors of the tree
+			
 		}
 	}
 	public void colorFix(Node inew)
@@ -77,9 +89,14 @@ public class RedBlackTrees {
 	               //single rotation If the node is LEFT
 	                rotateRight(inew.parent.parent);
 			}
-			else {
+			else{
+				if (inew.parent.parent==nill)
+					uncle = nill;
 				//The uncle is in the left of the grandparent
+				else
                 uncle = inew.parent.parent.left;
+               // System.out.println(uncle.color);
+                	
                 //IF THE UNCLE IS RED AND PARENT IS RED THEN WE CHANGE THEIR COLORS TO BLACK AND GRANDPARENT TO RED
                  if (uncle != nill && uncle.color == inew.RED) {
                     inew.parent.color = inew.BLACK;
@@ -98,9 +115,15 @@ public class RedBlackTrees {
             }
         }
         root.color = inew.BLACK;
+        
     }
 	private void rotateLeft(Node node) {
+		if(node.key.equals("nul")) {
+			
+		}
+		else {
 	       if (node.parent != nill) {
+	    	   System.out.println(node.key);
 	            if (node == node.parent.left) {
 	                node.parent.left = node.right;
 	            } else {
@@ -122,10 +145,24 @@ public class RedBlackTrees {
 	            right.parent = nill;
 	            root = right;
 	        }
+		}
 	}
 	private void rotateRight(Node inew) {
-		
-	      if (inew.parent != nill) {
+		if(inew.equals("nul"))
+		{
+			
+		}
+		else {
+	      if (inew.parent.key.equals("nul")) {
+	            Node left = root.left;
+	            root.left = root.left.right;
+	            left.right.parent = root;
+	            root.parent = left;
+	            left.right = root;
+	            left.parent = nill;
+	            root = left;
+	      }
+	      else {
 	            if (inew == inew.parent.left) {
 	                inew.parent.left = inew.left;
 	            } else {
@@ -134,20 +171,16 @@ public class RedBlackTrees {
 
 	            inew.left.parent = inew.parent;
 	            inew.parent = inew.left;
-	            if (inew.left.right != nill) {
+	            if (inew.left.right.key.equals("nul")) {
+	            	
+	            }
+	            else {
 	                inew.left.right.parent = inew;
 	            }
 	            inew.left = inew.left.right;
 	            inew.parent.right = inew;
-	        } else {
-	            Node left = root.left;
-	            root.left = root.left.right;
-	            left.right.parent = root;
-	            root.parent = left;
-	            left.right = root;
-	            left.parent = nill;
-	            root = left;
-	        }
+	        } 
 	    }
-		
+	}
+
 	}

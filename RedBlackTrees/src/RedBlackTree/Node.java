@@ -8,10 +8,11 @@ public class Node {
 	String key;
 	int color;
 	Node right , parent;
-	Node left = right= parent = RedBlackTrees.nill;
+	Node left = right= parent ;
 	Node (String key)
 	{
 		this.key = key;
+		left=parent=right= RedBlackTrees.nill;
 		
 	}
 

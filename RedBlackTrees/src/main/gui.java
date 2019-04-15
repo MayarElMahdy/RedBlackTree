@@ -2,6 +2,7 @@ package main;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -11,9 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import RedBlackTree.RedBlackTrees;
-import RedBlackTree.File;
+import RedBlackTree.file;
 
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
@@ -27,7 +29,7 @@ public class gui {
 	JButton btnSize;
 	JLabel lblDictionary;
 	JPanel panel1 ;
-	
+	file f;
 
 	/**
 	 * Launch the application.
@@ -47,15 +49,19 @@ public class gui {
 
 	/**
 	 * Create the application.
+	 * @throws FileNotFoundException 
 	 */
-	public gui() {
+	public gui()  {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws FileNotFoundException 
 	 */
 	private void initialize() {
+		f = new file();
+		f.Read();
 		frame = new JFrame();
 		frame.setBackground(Color.BLACK);
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
