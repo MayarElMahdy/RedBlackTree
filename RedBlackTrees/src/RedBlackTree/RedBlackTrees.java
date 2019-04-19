@@ -1,7 +1,7 @@
 package RedBlackTree;
 
 public class RedBlackTrees {
-	static Node nill ;
+	public static Node nill ;
 	public Node root;
 	public int DictSize;
 	RedBlackTrees()
@@ -16,6 +16,7 @@ public class RedBlackTrees {
 	public void insert(Node inew)
 	{
 		Node node = root;
+	
 		if(root == nill) //if the tree is empty
 		{	
 			root=inew;
@@ -176,7 +177,7 @@ public class RedBlackTrees {
 		        return 0;  
 		    else
 		    {  
-		    	//System.out.println(this.root.left.key);
+		    	
 		        // compute the depth of each subtree 
 		        int lDepth =TreeHeight(rt.left); 
 		        int rDepth = TreeHeight(rt.right);  
@@ -188,4 +189,20 @@ public class RedBlackTrees {
 		    } 
 	}
 
+public Node Search(Node r,String input)
+{
+	if(r==nill)
+	{
+		return nill;
 	}
+	int compare = input.compareTo(r.key);
+	if(compare == 0)
+		return r;
+	if(compare > 0)
+		return Search(r.right,input);
+	if(compare<0)
+		return Search(r.left,input);
+return nill;
+}
+}
+	

@@ -5,8 +5,8 @@ public class Node {
 	// RED = 0 ,,,, BLACK =1  
 	final int RED = 0; 
     final int BLACK = 1;
-	String key;
-	int color;
+	public String key;
+	public int color;
 	Node right ;
 	Node parent;
 	Node left ;

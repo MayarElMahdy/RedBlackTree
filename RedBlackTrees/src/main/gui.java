@@ -36,6 +36,10 @@ public class gui {
 	private JPanel panel2;
 	private JTextField textField;
 	private JLabel label;
+	private JTextField search;
+	JLabel FoundLabel;
+	JLabel Colo;
+	JLabel lblEnterTheWord_1;
 
 	/**
 	 * Launch the application.
@@ -75,6 +79,78 @@ public class gui {
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setLayout(null);
+		 
+		 JPanel panel4 = new JPanel();
+		 panel4.setBackground(SystemColor.activeCaption);
+		 panel4.setBounds(0, 0, 469, 511);
+		 frame.getContentPane().add(panel4);
+		 panel4.setLayout(null);
+		 
+		 search = new JTextField();
+		 search.setBounds(117, 197, 205, 33);
+		 panel4.add(search);
+		 search.setColumns(10);
+		 panel4.setVisible(false);
+		 
+		 JButton btnNewButton = new JButton("Search");
+		 btnNewButton.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 		String in = search.getText();
+		 		Node n = f.RBT.root;
+		 		n = f.RBT.Search(n,in);
+		 		search.setVisible(false);
+		 		lblEnterTheWord_1.setVisible(false);
+		 		if(n!=f.RBT.nill) {
+		 		FoundLabel.setText("FOUND!!"+n.key);
+		 		if(n.color==1)
+		 		{
+		 			Colo.setText("Color is BLACK");
+		 		}
+		 		else
+		 			Colo.setText("COLOR IS RED");
+		 		
+		 		
+		 	}else
+		 	{
+		 		FoundLabel.setText("NOT FOUND!");
+		 	}
+		 	btnNewButton.setVisible(false);	
+		 	}
+		 });
+		 btnNewButton.setBackground(SystemColor.inactiveCaption);
+		 btnNewButton.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 btnNewButton.setBounds(323, 465, 134, 33);
+		 panel4.add(btnNewButton);
+		 
+		 JButton btnNewButton_1 = new JButton("Main Menu");
+		 btnNewButton_1.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		panel1.setVisible(true);
+		 		panel2.setVisible(false);
+		 		panel3.setVisible(false);
+		 		panel4.setVisible(false);
+		 	}
+		 });
+		 btnNewButton_1.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 btnNewButton_1.setBackground(SystemColor.inactiveCaption);
+		 btnNewButton_1.setBounds(12, 465, 134, 33);
+		 panel4.add(btnNewButton_1);
+		 
+		 lblEnterTheWord_1 = new JLabel("Enter The Word You'd Like To Search");
+		 lblEnterTheWord_1.setHorizontalAlignment(SwingConstants.CENTER);
+		 lblEnterTheWord_1.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 lblEnterTheWord_1.setBounds(25, 97, 380, 33);
+		 panel4.add(lblEnterTheWord_1);
+		 
+		 FoundLabel = new JLabel("");
+		 FoundLabel.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 17));
+		 FoundLabel.setBounds(36, 256, 205, 33);
+		 panel4.add(FoundLabel);
+		 
+		 Colo = new JLabel("");
+		 Colo.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 Colo.setBounds(25, 319, 216, 33);
+		 panel4.add(Colo);
 		
 		 panel3 = new JPanel();
 		panel3.setBackground(SystemColor.activeCaption);
@@ -179,16 +255,21 @@ public class gui {
 		  frame.getContentPane().add(panel1);
 		  panel1.setBackground(SystemColor.inactiveCaption);
 		  panel1.setLayout(null);
-		  
-		  
-		  
 		  btnSearch = new JButton("Search For A Word");
 		  btnSearch.setBounds(70, 85, 252, 55);
 		  panel1.add(btnSearch);
 		  btnSearch.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent arg0) {
 		  	panel1.setVisible(false);
-		  	
+		  	panel4.setVisible(true);
+		  	panel3.setVisible(false);
+		  	panel2.setVisible(false);
+		  	FoundLabel.setText("");
+		  	Colo.setText("");
+		  	search.setVisible(true);
+		  	search.setText("");
+		  	lblEnterTheWord_1.setVisible(true);		  	
+		  	btnNewButton.setVisible(true);
 		  	}
 		  });
 		  btnSearch.setBackground(SystemColor.activeCaption);
