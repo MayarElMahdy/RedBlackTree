@@ -30,7 +30,8 @@ public class gui {
 	JButton btnDelete;
 	JButton btnSize;
 	JLabel lblDictionary;
-	JPanel panel1 ;
+	private JPanel panel1 ;
+	JPanel panel3;
 	file f;
 	private JPanel panel2;
 	private JTextField textField;
@@ -74,6 +75,47 @@ public class gui {
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setLayout(null);
+		
+		 panel3 = new JPanel();
+		panel3.setBackground(SystemColor.activeCaption);
+		panel3.setBounds(0, 0, 469, 511);
+		frame.getContentPane().add(panel3);
+		panel3.setLayout(null);
+		panel3.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("Dictonary Size is =");
+		lblNewLabel.setFont(new Font("Source Sans Pro Black", Font.PLAIN, 18));
+		lblNewLabel.setBounds(33, 117, 211, 50);
+		panel3.add(lblNewLabel);
+		
+		JLabel DictSize = new JLabel("");
+		DictSize.setFont(new Font("Sitka Text", Font.BOLD, 18));
+		DictSize.setBounds(256, 117, 117, 33);
+		panel3.add(DictSize);
+		
+		JLabel lblRedBlackTree = new JLabel("Red Black Tree Height=");
+		lblRedBlackTree.setFont(new Font("Source Sans Pro Black", Font.PLAIN, 18));
+		lblRedBlackTree.setBounds(33, 282, 211, 50);
+		panel3.add(lblRedBlackTree);
+		
+		JLabel height = new JLabel("");
+		height.setFont(new Font("Source Sans Pro Black", Font.PLAIN, 18));
+		height.setBounds(256, 282, 138, 33);
+		panel3.add(height);
+		
+		JButton ReturnToMain = new JButton("MainMenu");
+		ReturnToMain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel1.setVisible(true);
+				panel2.setVisible(false);
+				panel3.setVisible(false);
+			}
+		});
+		ReturnToMain.setBackground(SystemColor.inactiveCaption);
+		ReturnToMain.setForeground(SystemColor.menuText);
+		ReturnToMain.setFont(new Font("Source Sans Pro Black", Font.PLAIN, 18));
+		ReturnToMain.setBounds(12, 454, 148, 44);
+		panel3.add(ReturnToMain);
 		
 		panel2 = new JPanel();
 		panel2.setBackground(SystemColor.activeCaption);
@@ -179,6 +221,10 @@ public class gui {
 		  btnSize.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
 		  		panel1.setVisible(false);
+		  		panel2.setVisible(false);
+		  		panel3.setVisible(true);
+		  		DictSize.setText(Integer.toString(f.RBT.DictSize));
+		  		height.setText(Integer.toString(f.RBT.TreeHeight(f.RBT.root)));
 		  	}
 		  });
 		  btnSize.setBounds(70, 409, 252, 55);

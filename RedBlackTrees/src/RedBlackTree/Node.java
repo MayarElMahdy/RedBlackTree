@@ -7,13 +7,16 @@ public class Node {
     final int BLACK = 1;
 	String key;
 	int color;
-	Node right , parent;
-	Node left = right= parent ;
+	Node right ;
+	Node parent;
+	Node left ;
 	public Node (String key)
 	{
 		this.key = key;
-		left=parent=right= RedBlackTrees.nill;
-		
+		color = BLACK;
+		left= RedBlackTrees.nill;
+		right = RedBlackTrees.nill;
+		parent = RedBlackTrees.nill;
 	}
 
 }

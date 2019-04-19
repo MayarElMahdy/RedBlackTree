@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class file {
 	public RedBlackTrees RBT = new RedBlackTrees();
+	//public int DictSize;
 	public void Read() 
 	{
 		File f = new File("d.txt");
@@ -14,10 +15,10 @@ public class file {
 			s = new Scanner(f);
 			while(s.hasNextLine())
 			{
+				RBT.DictSize++;
 				String line = s.nextLine();
 				Node node = new Node(line);
 				RBT.insert(node);
-				
 			}
 			s.close();
 		} catch (FileNotFoundException e) {

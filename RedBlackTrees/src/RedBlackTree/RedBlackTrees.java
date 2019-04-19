@@ -1,39 +1,37 @@
 package RedBlackTree;
 
 public class RedBlackTrees {
-	final static Node nill = new Node("nul");
-	Node root;
+	static Node nill ;
+	public Node root;
+	public int DictSize;
 	RedBlackTrees()
 	{
-	     root = nill;
+		nill = new Node("nul");
+		nill.right=nill;
+		nill.left=nill;
+		nill.parent=nill;
+		DictSize=0;
+	    root = nill;
 	}
 	public void insert(Node inew)
 	{
 		Node node = root;
-		
 		if(root == nill) //if the tree is empty
 		{	
-			
-			inew.color = node.BLACK;
-			inew.left = nill;
-			inew.right=nill;
-			inew.parent = nill;
 			root=inew;
+			inew.color=node.BLACK;
+			inew.parent = nill;
 		}
-		
 		else
 		{
 			//We start the red black tree by coloring the node RED 
-			node.color = node.RED;
-			node.left=nill;
-			node.right=nill;
+			inew.color = node.RED;
 			while(true) //Breaks when there is a break argument
-			{
-				
-				int compare = inew.key.compareTo(node.key);
-				
+			{				
+				int compare = inew.key.compareTo(node.key);				
 				if(compare<0)
 				{
+				
 				if(node.left==nill) {
 					node.left = inew;
                     inew.parent = node;
@@ -46,6 +44,7 @@ public class RedBlackTrees {
 				}
 				else if (compare >= 0)
 				{
+				
 					if (node.right == nill) {
                         node.right = inew;
                         inew.parent = node;
@@ -57,15 +56,16 @@ public class RedBlackTrees {
 				
 			}
 			colorFix(inew); //After inserting the new node we fix the colors of the tree
-			
 		}
 	}
 	public void colorFix(Node inew)
 	{
-		Node uncle = nill;
+		
 		//The problem begins when the parent's color is RED , if it is BLACK then nothing is changed
 		while (inew.parent.color==inew.RED)
 		{
+			//System.out.println(inew.parent.key);
+			Node uncle = nill;
 			//First we need to find the UNCLE to check it's color
 			if(inew.parent.parent.left == inew.parent)
 			{
@@ -118,12 +118,8 @@ public class RedBlackTrees {
         
     }
 	private void rotateLeft(Node node) {
-		if(node.key.equals("nul")) {
-			
-		}
-		else {
-	       if (node.parent != nill) {
-	    	   System.out.println(node.key);
+		
+	     if (node.parent != nill) {
 	            if (node == node.parent.left) {
 	                node.parent.left = node.right;
 	            } else {
@@ -136,7 +132,7 @@ public class RedBlackTrees {
 	            }
 	            node.right = node.right.left;
 	            node.parent.left = node;
-	        } else {
+	        } else {//Need to rotate root
 	            Node right = root.right;
 	            root.right = right.left;
 	            right.left.parent = root;
@@ -145,42 +141,51 @@ public class RedBlackTrees {
 	            right.parent = nill;
 	            root = right;
 	        }
-		}
 	}
 	private void rotateRight(Node inew) {
-		if(inew.equals("nul"))
-		{
-			
-		}
-		else {
-	      if (inew.parent.key.equals("nul")) {
-	            Node left = root.left;
-	            root.left = root.left.right;
-	            left.right.parent = root;
-	            root.parent = left;
-	            left.right = root;
-	            left.parent = nill;
-	            root = left;
-	      }
-	      else {
-	            if (inew == inew.parent.left) {
-	                inew.parent.left = inew.left;
-	            } else {
-	                inew.parent.right = inew.left;
-	            }
+	    if (inew.parent != nill) {
+            if (inew == inew.parent.left) {
+                inew.parent.left = inew.left;
+            } else {
+                inew.parent.right = inew.left;
+            }
 
-	            inew.left.parent = inew.parent;
-	            inew.parent = inew.left;
-	            if (inew.left.right.key.equals("nul")) {
-	            	
-	            }
-	            else {
-	                inew.left.right.parent = inew;
-	            }
-	            inew.left = inew.left.right;
-	            inew.parent.right = inew;
-	        } 
-	    }
+            inew.left.parent = inew.parent;
+            inew.parent = inew.left;
+            if (inew.left.right != nill) {
+                inew.left.right.parent = inew;
+            }
+            inew.left = inew.left.right;
+            inew.parent.right = inew;
+        } else {//Need to rotate root
+            Node left = root.left;
+            root.left = root.left.right;
+            left.right.parent = root;
+            root.parent = left;
+            left.right = root;
+            left.parent = nill;
+            root = left;
+        }
+	}
+	public int TreeHeight(Node rt)
+	{
+		
+		//Go from the root to the farthest child
+		
+		 if (rt == nill)  
+		        return 0;  
+		    else
+		    {  
+		    	//System.out.println(this.root.left.key);
+		        // compute the depth of each subtree 
+		        int lDepth =TreeHeight(rt.left); 
+		        int rDepth = TreeHeight(rt.right);  
+		      
+		        //use the larger one 
+		        if (lDepth > rDepth)  
+		            return(lDepth + 1);  
+		        else return(rDepth + 1);  
+		    } 
 	}
 
 	}
