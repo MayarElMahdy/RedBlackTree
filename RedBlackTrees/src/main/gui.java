@@ -40,6 +40,9 @@ public class gui {
 	JLabel FoundLabel;
 	JLabel Colo;
 	JLabel lblEnterTheWord_1;
+	private JTextField DeleteText;
+	JPanel panel4;
+	 JPanel panel5;
 
 	/**
 	 * Launch the application.
@@ -80,7 +83,71 @@ public class gui {
 		frame.getContentPane().setForeground(new Color(0, 0, 0));
 		frame.getContentPane().setLayout(null);
 		 
-		 JPanel panel4 = new JPanel();
+		  panel5 = new JPanel();
+		 panel5.setBackground(SystemColor.activeCaption);
+		 panel5.setBounds(0, 0, 469, 511);
+		 frame.getContentPane().add(panel5);
+		 panel5.setLayout(null);
+		 panel5.setVisible(false);
+		 
+		 DeleteText = new JTextField();
+		 DeleteText.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 16));
+		 DeleteText.setBounds(115, 210, 242, 48);
+		 panel5.add(DeleteText);
+		 DeleteText.setColumns(10);
+		 
+		 JLabel lblEnterTheWord_2 = new JLabel("Enter The Word You'd Like to Delete :");
+		 lblEnterTheWord_2.setFont(new Font("Source Sans Pro Semibold", Font.BOLD, 18));
+		 lblEnterTheWord_2.setHorizontalAlignment(SwingConstants.CENTER);
+		 lblEnterTheWord_2.setBounds(87, 79, 311, 56);
+		 panel5.add(lblEnterTheWord_2);
+		 JLabel Sucess = new JLabel("");
+		 Sucess.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 17));
+		 Sucess.setHorizontalAlignment(SwingConstants.CENTER);
+		 Sucess.setBounds(115, 322, 242, 71);
+		 panel5.add(Sucess);
+		 
+		 JButton btnDelete_1 = new JButton("Delete");
+		 btnDelete_1.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 		String key = DeleteText.getText();
+		 		Node node = new Node(key);
+		 		boolean Del = f.RBT.delete(node);
+		 		if(Del == true) {
+		 			Sucess.setText("SUCESSFULLY DELETED");
+		 			f.RBT.DictSize--;
+		 		}
+		 		else
+		 			Sucess.setText("PLEASE TRY AGAIN");
+		 		DeleteText.setText("");
+		 	}
+		 });
+		 btnDelete_1.setBackground(SystemColor.inactiveCaption);
+		 btnDelete_1.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 btnDelete_1.setBounds(294, 462, 163, 36);
+		 panel5.add(btnDelete_1);
+		 
+		 JButton btnBackToMain = new JButton("Back To Main Menu");
+		 btnBackToMain.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		DeleteText.setText("");
+		 		Sucess.setText("");
+		 		panel1.setVisible(true);
+		 		panel2.setVisible(false);
+		 		panel3.setVisible(false);
+		 		panel4.setVisible(false);
+		 		panel5.setVisible(false);
+
+		 	}
+		 });
+		 btnBackToMain.setBackground(SystemColor.inactiveCaption);
+		 btnBackToMain.setFont(new Font("Source Sans Pro Semibold", Font.PLAIN, 18));
+		 btnBackToMain.setBounds(12, 462, 200, 36);
+		 panel5.add(btnBackToMain);
+		 
+		 
+		 
+		 panel4 = new JPanel();
 		 panel4.setBackground(SystemColor.activeCaption);
 		 panel4.setBounds(0, 0, 469, 511);
 		 frame.getContentPane().add(panel4);
@@ -185,6 +252,7 @@ public class gui {
 				panel1.setVisible(true);
 				panel2.setVisible(false);
 				panel3.setVisible(false);
+				panel4.setVisible(false);
 			}
 		});
 		ReturnToMain.setBackground(SystemColor.inactiveCaption);
@@ -237,6 +305,7 @@ public class gui {
 					textField.setText("");
 					Node node = new Node(line);
 					f.RBT.insert(node);
+					f.RBT.DictSize++;
 					label.setText("SUCCESSFULLY INSERTED");
 				}
 			}
@@ -290,7 +359,11 @@ public class gui {
 		  btnDelete = new JButton("Delete A Word");
 		  btnDelete.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
+		  		panel5.setVisible(true);
 		  		panel1.setVisible(false);
+		  		panel2.setVisible(false);
+		  		panel3.setVisible(false);
+		  		panel4.setVisible(false);
 		  	}
 		  });
 		  btnDelete.setBounds(70, 315, 252, 55);

@@ -170,18 +170,14 @@ public class RedBlackTrees {
 	}
 	public int TreeHeight(Node rt)
 	{
-		
 		//Go from the root to the farthest child
-		
 		 if (rt == nill)  
 		        return 0;  
 		    else
 		    {  
-		    	
 		        // compute the depth of each subtree 
 		        int lDepth =TreeHeight(rt.left); 
-		        int rDepth = TreeHeight(rt.right);  
-		      
+		        int rDepth = TreeHeight(rt.right);
 		        //use the larger one 
 		        if (lDepth > rDepth)  
 		            return(lDepth + 1);  
@@ -191,6 +187,9 @@ public class RedBlackTrees {
 
 public Node Search(Node r,String input)
 {
+	if (root == nill) {
+        return nill;
+    }
 	if(r==nill)
 	{
 		return nill;
@@ -204,5 +203,116 @@ public Node Search(Node r,String input)
 		return Search(r.left,input);
 return nill;
 }
+
+//The delete method // BARE IN MIND THAT THERE ARE THREE MAIN CASES FOR THE DELETE 
+// WE SWAP THE NODE WE WANT TO DELETE WITH (THE LEFTMOST OF THE RIGHT CHILD)
+void transport(Node nodeDel, Node child){ 
+    if(nodeDel.parent == nill){   //if the node is the root
+        root = child; //copy the child to the root (child depending on the CALL)
+    }else if(nodeDel == nodeDel.parent.left){  //Find the node place from the parent then overwrite the value of CHILD to it 
+        nodeDel.parent.left = child;
+    }else
+        nodeDel.parent.right = child;
+    child.parent = nodeDel.parent;  //delete the node by making the child's grandparent it's parent
 }
-	
+public boolean delete(Node nodeDel){
+	Node temp = root;
+  if((nodeDel = Search(temp, nodeDel.key)) == nill)return false;
+  Node x;
+  Node y = nodeDel; // temporary reference y
+  int orgColor = y.color;
+  
+  if(nodeDel.left == nill){
+      x = nodeDel.right;  
+      transport(nodeDel, nodeDel.right); 
+  }else if(nodeDel.right == nill){
+      x = nodeDel.left;
+      transport(nodeDel, nodeDel.left);
+      
+  }else{
+      y = leftMost(nodeDel.right);  //Get the MINIMUM VALUE FOUND which is the RIGHT leftmost of the node
+      orgColor = y.color;
+      x = y.right;
+      if(y.parent == nodeDel)
+          x.parent = y;
+      else{
+    	  transport(y, y.right);
+          y.right = nodeDel.right;
+          y.right.parent = y;
+      }
+      
+      transport(nodeDel, y);
+      y.left = nodeDel.left;
+      y.left.parent = y;
+      y.color = nodeDel.color; 
+  }
+  if(orgColor==x.BLACK)  //IF RED THEN FIRST CASE --REPLACE WITH CHILD --
+      deleteFixup(x);  //If the node that is deleted was BLACK then we need to fix the color of tree CASE TWO AND THREE
+  return true;
+}
+void deleteFixup(Node x){ //In delete we focus on the SIBLING 
+  while(x!=root && x.color == x.BLACK){  //We fix up till we find a red NODE or we reach the root
+      if(x == x.parent.left){ //FIND THE SIBLING 
+          Node sibling = x.parent.right;  
+          if(sibling.color == x.RED){
+              sibling.color = x.BLACK;
+              x.parent.color = x.RED;
+              rotateLeft(x.parent);
+              sibling = x.parent.right;
+          }
+          if(sibling.left.color == x.BLACK && sibling.right.color == x.BLACK){ 
+              sibling.color = x.RED;
+              x = x.parent;
+              continue;
+          }
+          else if(sibling.right.color == x.BLACK){
+              sibling.left.color = x.BLACK;
+              sibling.color = x.RED;
+              rotateRight(sibling);
+              sibling = x.parent.right;
+          }
+          if(sibling.right.color == x.RED){  
+              sibling.color = x.parent.color;
+              x.parent.color = x.BLACK;
+              sibling.right.color = x.BLACK;
+              rotateLeft(x.parent);
+              x = root;
+          }
+      }else{ //THE PLACE OF THE SIBLING EFFECTS ON THE ROTATE 
+          Node sibling = x.parent.left;
+          if(sibling.color == x.RED){
+              sibling.color = x.BLACK;
+              x.parent.color = x.RED;
+              rotateRight(x.parent);
+              sibling= x.parent.left;
+          }
+          if(sibling.right.color == x.BLACK && sibling.left.color == x.BLACK){
+              sibling.color = x.RED;
+              x = x.parent;
+              continue;
+          }
+          else if(sibling.left.color == x.BLACK){
+              sibling.right.color = x.BLACK;
+              sibling.color = x.RED;
+              rotateLeft(sibling);
+              sibling = x.parent.left;
+          }
+          if(sibling.left.color == x.RED){
+              sibling.color = x.parent.color;
+              x.parent.color = x.BLACK;
+              sibling.left.color = x.BLACK;
+              rotateRight(x.parent);
+              x = root;
+          }
+      }
+  }
+  x.color = x.BLACK; //At the end the node is black 
+} 
+
+Node leftMost(Node nodeDel){ //Bare in mind that you are searching for the minimum value --LEFTMOST NODE--
+  while(nodeDel.left!=nill){    //Takes the leftmost node from the delete Node we want so we copy it with it  
+      nodeDel = nodeDel.left;
+  }   
+  return nodeDel;
+}
+}
