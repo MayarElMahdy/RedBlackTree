@@ -16,7 +16,7 @@ public class RedBlackTrees {
 	public void insert(Node inew)
 	{
 		Node node = root;
-	
+	  
 		if(root == nill) //if the tree is empty
 		{	
 			root=inew;
@@ -27,12 +27,11 @@ public class RedBlackTrees {
 		{
 			//We start the red black tree by coloring the node RED 
 			inew.color = node.RED;
-			while(true) //Breaks when there is a break argument
+			while(true) //Breaks when there is a break argument ,, finds its place to be inserted
 			{				
 				int compare = inew.key.compareTo(node.key);				
 				if(compare<0)
-				{
-				
+				{		
 				if(node.left==nill) {
 					node.left = inew;
                     inew.parent = node;
@@ -118,39 +117,39 @@ public class RedBlackTrees {
         root.color = inew.BLACK;
         
     }
-	private void rotateLeft(Node node) {
+	private void rotateLeft(Node node) {   
 		
-	     if (node.parent != nill) {
-	            if (node == node.parent.left) {
-	                node.parent.left = node.right;
-	            } else {
-	                node.parent.right = node.right;
+	     if (node.parent != nill) {   //Checks if the node's parent is root
+	            if (node == node.parent.left) {   //First we get the node's place Cause if it is left so we preform LEFT (LEFT) rotation
+	                node.parent.left = node.right;   //RIGHT CHILD OF NODE BECOMES THE PARENT'S LEFT CHILD (overwrites the node)
+	            } else {  
+	                node.parent.right = node.right; // right becomes the right (overwrites the node)
 	            }
-	            node.right.parent = node.parent;
-	            node.parent = node.right;
-	            if (node.right.left != nill) {
-	                node.right.left.parent = node;
+	            node.right.parent = node.parent; //the grandparent becomes the parent of the right child
+	            node.parent = node.right; //node parent becomes the right child
+	            if (node.right.left != nill) { 
+	                node.right.left.parent = node; 
 	            }
 	            node.right = node.right.left;
 	            node.parent.left = node;
 	        } else {//Need to rotate root
-	            Node right = root.right;
-	            root.right = right.left;
-	            right.left.parent = root;
-	            root.parent = right;
-	            right.left = root;
-	            right.parent = nill;
+	            Node right = root.right;  
+	            root.right = right.left; //replace the right with the left
+	            right.left.parent = root; //changes the right left parent with the root 
+	            root.parent = right; //root's parent becomes right --THAT MEANS IT IS NOT ROOT ANYMORE--
+	            right.left = root; //the right left child of the root becomes the KEY of the root
+	            right.parent = nill; //new root is the right child of the root
 	            root = right;
 	        }
 	}
 	private void rotateRight(Node inew) {
 	    if (inew.parent != nill) {
-            if (inew == inew.parent.left) {
-                inew.parent.left = inew.left;
+            if (inew == inew.parent.left) { //Rotate sub tree --First find it's place 
+                inew.parent.left = inew.left; //if it is left child then let the left child of the node become the parent the nod
             } else {
-                inew.parent.right = inew.left;
+                inew.parent.right = inew.left; //the parent of the node becomes its left child
             }
-
+           //the left child new parent is his grandfather , and the node is the right child of the new parent--LEFT CHILD--
             inew.left.parent = inew.parent;
             inew.parent = inew.left;
             if (inew.left.right != nill) {
@@ -159,13 +158,13 @@ public class RedBlackTrees {
             inew.left = inew.left.right;
             inew.parent.right = inew;
         } else {//Need to rotate root
-            Node left = root.left;
-            root.left = root.left.right;
-            left.right.parent = root;
-            root.parent = left;
+            Node left = root.left;  
+            root.left = root.left.right; //left becomes the left right of root
+            left.right.parent = root; //left right becomes the key of the root 
+            root.parent = left; //root parent is the left child --LEFT CHILD IS NEW ROOT--
             left.right = root;
             left.parent = nill;
-            root = left;
+            root = left; // new root is the left child of the root
         }
 	}
 	public int TreeHeight(Node rt)
@@ -217,12 +216,11 @@ void transport(Node nodeDel, Node child){
 }
 public boolean delete(Node nodeDel){
 	Node temp = root;
-  if((nodeDel = Search(temp, nodeDel.key)) == nill)return false;
-  Node x;
+  if((nodeDel = Search(temp, nodeDel.key)) == nill)return false; //if not found in the tree return false
+  Node x;  
   Node y = nodeDel; // temporary reference y
-  int orgColor = y.color;
-  
-  if(nodeDel.left == nill){
+  int orgColor = y.color; //save the color of the node needed to be deleted
+  if(nodeDel.left == nill){  
       x = nodeDel.right;  
       transport(nodeDel, nodeDel.right); 
   }else if(nodeDel.right == nill){

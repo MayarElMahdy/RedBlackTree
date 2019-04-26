@@ -13,7 +13,7 @@ public class Node {
 	public Node (String key)
 	{
 		this.key = key;
-		color = BLACK;
+		color = BLACK; //because we want to make the nill node color black
 		left= RedBlackTrees.nill;
 		right = RedBlackTrees.nill;
 		parent = RedBlackTrees.nill;
